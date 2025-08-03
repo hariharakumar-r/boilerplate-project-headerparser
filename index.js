@@ -3,6 +3,7 @@
 
 // init project
 require('dotenv').config();
+var axios = require("axios");
 var express = require('express');
 var app = express();
 
@@ -24,6 +25,16 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+app.get('/api/whoami', (req,res)=> {
+  res.json({
+    "ipadress": req.headers.host,
+    "language":req.headers['accept-language'],
+    "software": req.headers['user-agent']
+  });
+});
+
+const PORT = process.env.PORT || 3001;
+app.listen(PORT , () => console.log(`Server running on port ${PORT}`));
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
   console.log('Your app is listening on port ' + listener.address().port);
